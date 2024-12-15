@@ -6,6 +6,8 @@ import AppointmentForm from './components/Appointments/AppointmentForm';
 import EditAppointment from './components/Appointments/EditAppointment';
 import DoctorList from './components/Doctors/DoctorList';
 import UserDashboard from './components/Dashboard/UserDashboard';
+import LandingPage from './components/LandingPage/LandingPage';
+import Register from './components/Auth/Register';
 
 
 const App = () => {
@@ -20,6 +22,8 @@ const App = () => {
 
   return (
     <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login setAuthenticated={setAuthenticated} />} />
       <Route
         path="/home"
