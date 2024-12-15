@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Auth/Login';
 import Home from './components/Home/Home';
-import AppointmentList from './components/Appointments/AppointmentList';
 import AppointmentForm from './components/Appointments/AppointmentForm';
 import EditAppointment from './components/Appointments/EditAppointment';
 import DoctorList from './components/Doctors/DoctorList';
