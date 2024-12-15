@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -11,6 +12,8 @@ import {
 import API from '../../utils/api';
 
 const DoctorList = () => {
+  const navigate = useNavigate();
+
   const [doctors, setDoctors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Current page state
   const [totalPages, setTotalPages] = useState(1); // Total pages state
@@ -55,6 +58,7 @@ const DoctorList = () => {
                   variant="contained"
                   color="primary"
                   style={{ marginTop: '10px' }}
+                  onClick={() => navigate(`/book/${doctor._id}`)}
                 >
                   Book Appointment
                 </Button>
