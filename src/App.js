@@ -4,12 +4,14 @@ import Login from './components/Auth/Login';
 import Home from './components/Home/Home';
 import AppointmentList from './components/Appointments/AppointmentList';
 import AppointmentForm from './components/Appointments/AppointmentForm';
+import EditAppointment from './components/Appointments/EditAppointment';
 import DoctorList from './components/Doctors/DoctorList';
+import UserDashboard from './components/Dashboard/UserDashboard';
+
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
 
-  // Check for token on app load
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -26,11 +28,15 @@ const App = () => {
       />
       <Route
         path="/appointments"
-        element={authenticated ? <AppointmentList /> : <Navigate to="/login" />}
+        element={authenticated ? <UserDashboard /> : <Navigate to="/login" />}
       />
       <Route
-        path="/book/:doctorId"
+        path="/book"
         element={authenticated ? <AppointmentForm /> : <Navigate to="/login" />}
+      />
+      <Route
+        path="/edit-appointment/:id"
+        element={authenticated ? <EditAppointment /> : <Navigate to="/login" />}
       />
       <Route
         path="/doctors"

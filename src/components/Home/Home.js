@@ -2,8 +2,14 @@ import React from 'react';
 import { Container, Typography, Button, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const Home = () => {
+const Home = ({ setAuthenticated }) => {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Clear token from localStorage
+    setAuthenticated(false); // Update authenticated state
+    navigate('/login'); // Redirect to login page
+  };
 
   return (
     <Container style={{ textAlign: 'center', marginTop: '50px' }}>
@@ -32,6 +38,13 @@ const Home = () => {
           onClick={() => navigate('/doctors')}
         >
           View Doctors
+        </Button>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={handleLogout}
+        >
+          Logout
         </Button>
       </Stack>
     </Container>
