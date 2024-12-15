@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Container } from '@mui/material';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import API from '../../utils/api';
 
 const Login = ({ setAuthenticated }) => {
   const [form, setForm] = useState({ email: '', password: '' });
-  const navigate = useNavigate(); // Initialize the hook
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await API.post('/auth/login', form);
-      localStorage.setItem('token', response.data.token); // Save the JWT token
-      setAuthenticated(true); // Update the authenticated state
-      alert('Login successful!');
-      navigate('/appointments'); // Redirect to the appointment page
+      localStorage.setItem('token', response.data.token); // Save the token
+      setAuthenticated(true); // Update authentication state
+      navigate('/home'); // Redirect to home screen
     } catch (err) {
-      alert(err.response?.data?.message || 'Error occurred.');
+      setError(err.response?.data?.message || 'Login failed. Please try again.');
     }
   };
 
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" gutterBottom>Login</Typography>
+      {error && <Typography color="error">{error}</Typography>}
       <form onSubmit={handleSubmit}>
         <TextField
           label="Email"

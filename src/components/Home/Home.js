@@ -1,36 +1,39 @@
 import React from 'react';
-import { Container, Typography, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Container, Typography, Button, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <Container style={{ textAlign: 'center', marginTop: '50px' }}>
-      <Typography variant="h3" gutterBottom>
-        Welcome to the Medical Appointment Booking System
-      </Typography>
+      <Typography variant="h3" gutterBottom>Welcome to the Dashboard</Typography>
       <Typography variant="h6" gutterBottom>
-        Book appointments with top doctors easily and efficiently.
+        Manage your appointments and browse available doctors.
       </Typography>
-      <div style={{ marginTop: '20px' }}>
+      <Stack spacing={2} style={{ marginTop: '20px' }} direction="column">
         <Button
-          component={Link}
-          to="/login"
           variant="contained"
           color="primary"
-          style={{ margin: '10px' }}
+          onClick={() => navigate('/appointments')}
         >
-          Login
+          View Appointments
         </Button>
         <Button
-          component={Link}
-          to="/register"
-          variant="outlined"
+          variant="contained"
           color="secondary"
-          style={{ margin: '10px' }}
+          onClick={() => navigate('/book')}
         >
-          Register
+          Book an Appointment
         </Button>
-      </div>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => navigate('/doctors')}
+        >
+          View Doctors
+        </Button>
+      </Stack>
     </Container>
   );
 };
