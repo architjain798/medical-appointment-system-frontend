@@ -1,23 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Container, Grid, Button } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  Typography,
+  Container,
+  Grid,
+  Button,
+  Pagination,
+} from '@mui/material';
 import API from '../../utils/api';
-import { useNavigate } from 'react-router-dom';
 
 const DoctorList = () => {
   const [doctors, setDoctors] = useState([]);
-  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const [totalPages, setTotalPages] = useState(1); // Total pages state
 
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await API.get('/doctors');
-        setDoctors(response.data);
+        const response = await API.get('/doctors', {
+          params: { page: currentPage, limit: 10 }, // Send page and limit as query params
+        });
+        setDoctors(response.data.doctors);
+        setTotalPages(response.data.totalPages);
       } catch (err) {
-        console.error(err);
+        console.error('Error fetching doctors:', err);
       }
     };
+
     fetchDoctors();
-  }, []);
+  }, [currentPage]); // Refetch doctors when the current page changes
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value); // Update current page
+  };
 
   return (
     <Container>
@@ -38,7 +54,6 @@ const DoctorList = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => navigate(`/book/${doctor._id}`)}
                   style={{ marginTop: '10px' }}
                 >
                   Book Appointment
@@ -48,6 +63,14 @@ const DoctorList = () => {
           </Grid>
         ))}
       </Grid>
+      {/* Pagination Controls */}
+      <Pagination
+        count={totalPages} // Total number of pages
+        page={currentPage} // Current active page
+        onChange={handlePageChange} // Handle page change
+        color="primary"
+        style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}
+      />
     </Container>
   );
 };
